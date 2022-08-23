@@ -9,24 +9,21 @@ where
     pub removed: HashMap<K, V>,
 }
 
-pub fn hash_map_diff<K, V>(
-    old_hash_map: &HashMap<K, V>,
-    new_hash_map: &HashMap<K, V>,
-) -> HashMapDiff<K, V>
+pub fn hash_map_diff<K, V>(lhs: &HashMap<K, V>, rhs: &HashMap<K, V>) -> HashMapDiff<K, V>
 where
     K: Eq + std::hash::Hash + Clone,
     V: Eq + Clone,
 {
     let mut removed: HashMap<K, V> = HashMap::new();
-    for (key, value) in old_hash_map {
-        if !new_hash_map.contains_key(key) {
+    for (key, value) in lhs {
+        if !rhs.contains_key(key) {
             removed.insert(key.to_owned(), value.to_owned());
         }
     }
 
     let mut updated: HashMap<K, V> = HashMap::new();
-    for (key, new_value) in new_hash_map {
-        if let Some(old_value) = old_hash_map.get(key) {
+    for (key, new_value) in rhs {
+        if let Some(old_value) = lhs.get(key) {
             if new_value != old_value {
                 updated.insert(key.to_owned(), new_value.to_owned());
             }
@@ -76,5 +73,20 @@ mod should {
             removed: HashMap::new(),
         };
         assert_eq!(diff, expected_diff);
+    }
+
+    #[test]
+    fn usage_test() {
+        let lhs = [("key1", 1), ("key2", 2), ("key3", 3)].into();
+        let rhs = [("key1", 1), ("key3", 5), ("key4", 4)].into();
+
+        let received_diff = hash_map_diff(&lhs, &rhs);
+
+        let expected_diff = HashMapDiff {
+            updated: [("key3", 5), ("key4", 4)].into(),
+            removed: [("key2", 2)].into(),
+        };
+
+        assert_eq!(received_diff, expected_diff);
     }
 }
