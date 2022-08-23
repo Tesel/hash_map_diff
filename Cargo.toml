@@ -7,7 +7,6 @@ license = "MIT"
 description = "Comparing changes between two HashMaps"
 repository = "https://github.com/Tesel/hash_map_diff"
 keywords = ["hashmap", "diff", "subtract"]
-categories = ["qol"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
