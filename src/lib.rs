@@ -77,14 +77,14 @@ mod should {
 
     #[test]
     fn usage_test() {
-        let lhs = [("key1", 1), ("key2", 2), ("key3", 3)].into();
-        let rhs = [("key1", 1), ("key3", 5), ("key4", 4)].into();
+        let lhs = [("unchanged", 1), ("removed", 2), ("changed", 3)].into();
+        let rhs = [("unchanged", 1), ("changed", 5), ("added", 4)].into();
 
         let received_diff = hash_map_diff(&lhs, &rhs);
 
         let expected_diff = HashMapDiff {
-            updated: [("key3", 5), ("key4", 4)].into(),
-            removed: [("key2", 2)].into(),
+            updated: [("changed", 5), ("added", 4)].into(),
+            removed: [("removed", 2)].into(),
         };
 
         assert_eq!(received_diff, expected_diff);
