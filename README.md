@@ -14,8 +14,8 @@ pub fn main() {
     let received_diff = hash_map_diff(&lhs, &rhs);
 
     let expected_diff = HashMapDiff {
-        updated: [("changed", 5), ("added", 4)].into(),
-        removed: [("removed", 2)].into(),
+        updated: [(&"changed", &5), (&"added", &4)].into(),
+        removed: [(&"removed", &2)].into(),
     };
 
     assert_eq!(received_diff, expected_diff);
