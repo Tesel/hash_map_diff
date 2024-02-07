@@ -1,7 +1,6 @@
 # hash_map_diff
 
-This library is intended to compute diff between two hashmaps to see which keys have been removed in lhs, and which ones have received new value in rhs.
-
+This library is intended to compute diff between two hashmaps.
 
 ## Usage example
 ```rust
